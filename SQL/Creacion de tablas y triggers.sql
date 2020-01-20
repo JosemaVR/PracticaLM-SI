@@ -1,5 +1,6 @@
 -- BORRAR TODAS LAS TABLAS
 
+DROP TABLE tiposUsuario CASCADE CONSTRAINTS;
 DROP TABLE usuarios CASCADE CONSTRAINTS;
 DROP TABLE articulos CASCADE CONSTRAINTS;
 DROP TABLE fotos CASCADE CONSTRAINTS;
@@ -10,10 +11,17 @@ DROP TABLE esPublicado CASCADE CONSTRAINTS;
 
 -- CREACION DE TODAS LAS TABLAS
 
+CREATE TABLE tiposUsuario (
+    idTipoUsuario INT NOT NULL CONSTRAINT tipoUsuario_pk PRIMARY KEY,
+    nombreTipoUsuario VARCHAR(50) NOT NULL
+);
+
 CREATE TABLE usuarios (
 	idUsuario INT NOT NULL CONSTRAINT usuario_pk PRIMARY KEY,
 	nombreUsuario VARCHAR(50) NOT NULL,
-	passUsuario VARCHAR(50) NOT NULL
+	passUsuario VARCHAR(50) NOT NULL,
+    idTipoUsuarioFK INT NOT NULL,
+    CONSTRAINT tipoUsuarioFK FOREIGN KEY (idTipoUsuarioFK) REFERENCES TIPOSUSUARIO(idTipoUsuario)
 );
 /
 
@@ -69,6 +77,7 @@ CREATE TABLE esPublicado (
 
 -- BORRAR TODAS LAS SECUENCIAS
 
+drop SEQUENCE secTiposUsuario;
 drop SEQUENCE secUsuarios;
 drop SEQUENCE secArticulos;
 drop SEQUENCE secFotos;
@@ -77,6 +86,16 @@ drop SEQUENCE secPublicaciones;
 drop SEQUENCE secEsRevisado;
 drop SEQUENCE secEsPublicado;
 -- CREACION DE SECUENCIAS
+
+CREATE SEQUENCE secTiposUsuario;
+
+CREATE OR REPLACE TRIGGER creaIdTipoUsuario
+BEFORE INSERT ON tiposUsuario
+FOR EACH ROW
+BEGIN
+  SELECT secTiposUsuario.nextval INTO :NEW.idTipoUsuario from DUAL;
+END;
+/
 
 CREATE SEQUENCE secUsuarios;
 
@@ -161,3 +180,13 @@ BEGIN
   END IF;
 
 END ASSERT_EQUALS;
+/
+
+-- CREACION DE USUARIO ADMINISTRADOR INICIAL
+
+insert into tiposUsuario values (null, 'Administrador Jefe');
+insert into tiposUsuario values (null, 'Administrador');
+insert into tiposUsuario values (null, 'Colaborador');
+insert into tiposUsuario values (null, 'Invitado');
+
+insert into usuarios values (null, 'admin', '12345', 1);
