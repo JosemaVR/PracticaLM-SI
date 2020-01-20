@@ -187,6 +187,6 @@ END ASSERT_EQUALS;
 insert into tiposUsuario values (null, 'Administrador Jefe');
 insert into tiposUsuario values (null, 'Administrador');
 insert into tiposUsuario values (null, 'Colaborador');
-insert into tiposUsuario values (null, 'Invitado');
+insert into tiposUsuario values (null, 'Registrado');
 
 insert into usuarios values (null, 'admin', '12345', 1);
