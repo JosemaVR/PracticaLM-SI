@@ -30,8 +30,8 @@ CREATE TABLE articulos (
 	nombreArticulo VARCHAR(50) NOT NULL,
 	contenidoArticulo VARCHAR(1000) NOT NULL,
 	fechaArticulo DATE,
-	idUsuario INT NOT NULL,
-	CONSTRAINT articuloUsuarioFK FOREIGN KEY (idUsuario) REFERENCES USUARIOS(idUsuario)
+	idUsuarioFK INT NOT NULL,
+	CONSTRAINT articuloUsuarioFK FOREIGN KEY (idUsuarioFK) REFERENCES USUARIOS(idUsuario)
 );
 /
 
@@ -190,3 +190,15 @@ insert into tiposUsuario values (null, 'Colaborador');
 insert into tiposUsuario values (null, 'Registrado');
 
 insert into usuarios values (null, 'admin', '12345', 1);
+
+insert into articulos values (null, 'Articulo de prueba', 'Probando que conecta con la base de datos y se ve correcto', TO_DATE('17/12/2015', 'DD/MM/YYYY'), 1);
+
+insert into revisiones values (null, TO_DATE('17/12/2015', 'DD/MM/YYYY'), 1, 'Correcto', 1);
+
+insert into esRevisado values (null, 1, 1);
+
+insert into publicaciones values (null, TO_DATE('17/12/2015', 'DD/MM/YYYY'), 1);
+
+insert into esPublicado values (null, 1, 1);
+
+select * from articulos a, esPublicado e, esRevisado k, publicaciones p, revisiones r, usuarios u where a.idArticulo=k.idArticuloFK and p.idPublicacion=e.idPublicacionFK and p.idRevisionFK=r.idRevision and a.idUsuarioFK=u.idUsuario order by a.fechaArticulo;
