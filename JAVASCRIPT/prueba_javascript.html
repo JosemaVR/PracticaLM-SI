@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Actividad 29</title>
+		<script>
+			function addText(event) {
+				var targ = event.target || event.srcElement;
+				document.getElementById("alltext").value += targ.textContent || targ.innerText;
+			}
+		</script>
+	</head>
+
+	<body>
+		
+		<textarea id="alltext" cols="100" rows="40"></textarea>
+
+		<ol onclick="addText(event)">
+			<li><xmp> <a href="http://..." target="_blank">...</a> </xmp></li>
+			<li><xmp> <br><img border="0" src="https://..." width="200" height="200"><br> </xmp></li>
+		</ol>
+	</body>	
+</html>

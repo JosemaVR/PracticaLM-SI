@@ -3,11 +3,7 @@
 DROP TABLE tiposUsuario CASCADE CONSTRAINTS;
 DROP TABLE usuarios CASCADE CONSTRAINTS;
 DROP TABLE articulos CASCADE CONSTRAINTS;
-DROP TABLE fotos CASCADE CONSTRAINTS;
-DROP TABLE revisiones CASCADE CONSTRAINTS;
 DROP TABLE publicaciones CASCADE CONSTRAINTS;
-DROP TABLE esRevisado CASCADE CONSTRAINTS;
-DROP TABLE esPublicado CASCADE CONSTRAINTS;
 
 -- CREACION DE TODAS LAS TABLAS
 
@@ -28,20 +24,12 @@ CREATE TABLE usuarios (
 CREATE TABLE articulos (
 	idArticulo INT NOT NULL CONSTRAINT articulo_pk PRIMARY KEY,
 	nombreArticulo VARCHAR(50) NOT NULL,
-	contenidoArticulo VARCHAR(100) NOT NULL,
+	contenidoArticulo VARCHAR(4000) NOT NULL,
 	fechaArticulo DATE,
 	idUsuarioFK INT NOT NULL,
 	CONSTRAINT articuloUsuarioFK FOREIGN KEY (idUsuarioFK) REFERENCES USUARIOS(idUsuario)
 );
 /
-
-CREATE TABLE fotos (
-	idFoto INT NOT NULL CONSTRAINT foto_pk PRIMARY KEY,
-	nombreFoto VARCHAR(50),
-	idArticuloFK INT,
-    rutaFoto VARCHAR(150) NOT NULL,
-	CONSTRAINT fotoArticuloFK FOREIGN KEY (idArticuloFK) REFERENCES ARTICULOS(idArticulo)
-);
 
 CREATE TABLE publicaciones (
     idPublicacion INT NOT NULL CONSTRAINT publicacionPK PRIMARY KEY,
@@ -55,7 +43,6 @@ CREATE TABLE publicaciones (
 drop SEQUENCE secTiposUsuario;
 drop SEQUENCE secUsuarios;
 drop SEQUENCE secArticulos;
-drop SEQUENCE secFotos;
 drop SEQUENCE secPublicaciones;
 -- CREACION DE SECUENCIAS
 
@@ -87,17 +74,6 @@ FOR EACH ROW
 BEGIN
   SELECT secArticulos.nextval INTO :NEW.idArticulo from DUAL;
 END;
-/
-
-CREATE SEQUENCE secFotos;
-
-CREATE OR REPLACE TRIGGER creaIdFotos
-BEFORE INSERT ON fotos
-FOR EACH ROW
-BEGIN
-  SELECT secFotos.nextval INTO :NEW.idFoto from DUAL;
-END;
-
 /
 
 CREATE SEQUENCE secPublicaciones;
@@ -134,10 +110,10 @@ insert into tiposUsuario values (null, 'Registrado');
 insert into usuarios values (null, 'admin', '12345', 1);
 insert into usuarios values (null, 'admin2', '12345', 2);
 
-insert into articulos values (null, 'Articulo de prueba', 'Probando que conecta con la base de datos y se ve correcto', TO_DATE('17/12/2015', 'DD/MM/YYYY'), 1);
-insert into articulos values (null, 'Articulo de prueba 2', 'Probando de nuevo que conecta con la base de datos y se ve correcto', TO_DATE('18/11/2016', 'DD/MM/YYYY'), 2);
+insert into articulos values (null, 'Articulo de prueba', 'Probando que conecta con la base de datos y se ve correcto <br><img border="0" src="https://disenowebakus.net/imagenes/imagenes-varios/enlace-texto.jpg" width="200" height="200"><br> Y continua el texto', TO_DATE('17/12/2015', 'DD/MM/YYYY'), 1);
+insert into articulos values (null, 'Articulo de prueba 2', 'Probando que muestra los enlaces: <a href="http://marca.com" target="_blank">marca.com</a>', TO_DATE('18/11/2016', 'DD/MM/YYYY'), 2);
 
 insert into publicaciones values (null, TO_DATE('17/12/2015', 'DD/MM/YYYY'), 1);
 insert into publicaciones values (null, TO_DATE('14/02/2014', 'DD/MM/YYYY'), 2);
 
-SELECT * FROM ARTICULOS, PUBLICACIONES, USUARIOS where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and PUBLICACIONES.idArticuloFK=ARTICULOS.idArticulo;
+SELECT * FROM ARTICULOS, PUBLICACIONES, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and PUBLICACIONES.idArticuloFK=ARTICULOS.idArticulo and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario;
