@@ -7,14 +7,20 @@
 				var targ = event.target || event.srcElement;
 				document.getElementById("alltext").value += targ.textContent || targ.innerText;
 			}
+			
+			function countChars(obj){
+				document.getElementById("charNum").innerHTML = obj.value.length+' de 4000';
+			}
 		</script>
 	</head>
 
 	<body>
 		
-		<textarea id="alltext" cols="100" rows="40"></textarea>
-
-		<ol onclick="addText(event)">
+		<textarea id="alltext" cols="100" rows="40" onkeypress="countChars(this)" maxlength="4000"></textarea>
+		
+		<p id="charNum">0 de 4000</p>		
+		
+		<ol onclick="addText(event)" onclick="countChars(this)">
 			<li><xmp> <a href="http://..." target="_blank">...</a> </xmp></li>
 			<li><xmp> <br><img border="0" src="https://..." width="200" height="200"><br> </xmp></li>
 		</ol>
