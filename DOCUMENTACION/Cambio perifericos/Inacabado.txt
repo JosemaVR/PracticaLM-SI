@@ -1,0 +1,13 @@
+Periféricos: pci, pci express, puertos de memoria, inalambricos, usb; audio, video y multimedia, alimentacion y unidades de almacenamiento.
+
+Los puertos PCI y PCI Express (Peripheral Component Interconnect) son ranuras de expansión de la placa base. En estas se conectan tarjetas de sonido, vídeo, RAM, red, etc.
+Las PCI Express son una versión muy mejorada de las PCI; aumentando la señal, mejorando las transmisiones de datos, mejorando la compatibilidad… Este tipo de puertos se verán con más claridad en cambio de componentes.
+
+Los Puertos USB son los puertos más versátiles ahora existentes, pudiendo conectar más de 127 tipos de dispositivos diferentes.
+
+La entrada y salida de sonido es muy común encontrarlo en formato Jack, aunque hay más formas de transmitir este tipo de dato (por ejemplo, los puertos S-Video).
+
+Los Euroconectores, DVI y HDMI son los transmisores de datos de vídeo (multimedia en el caso del HDMI) más comunes. HDMI también incorpora sonido en su paquete de datos.
+
+El periférico más importante de todo el PC es la fuente de alimentación, ya que sin este no podríamos usar nuestra computadora y este varía según el modelo y la marca del PC.
+
