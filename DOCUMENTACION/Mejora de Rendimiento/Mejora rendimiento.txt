@@ -1,7 +1,7 @@
 1. Comprueba los programas ejecutándose. Aprieta en control + alt + suprimir, ve a la pestaña de “procesos” y comprueba qué está ejecutándose. A veces el PC va lento porque se están ejecutando muchas aplicaciones a la vez y puede que tenga poca RAM. Termina los procesos que no necesitas.
 Haz click derecho sobre tu barra de tareas y selecciona Administrador de tareas. Clickea sobre los programas que estén ejecutándose en segundo plano y vaya al botón “Finalizar”. Esto hará que el programa se cierre liberando espacio en su RAM.
 
-2. Elimina virus y troyanos. Si han entrado virus, troyanos o spyware en tu PC en alguna ocasión, es probable que pueda volver a suceder. Consigue un buen antivirus, haz un análisis y elimina o pon en cuarenta las infecciones. Si tienes instalado uno que te ralentiza demasiado el PC, estudiar coger otro que te funcione mejor.
+2. Elimina virus y troyanos. Si han entrado virus, troyanos o spyware en tu PC en alguna ocasión, es probable que pueda volver a suceder. Consigue un buen antivirus, haz un análisis y elimina o pon en cuarentena las infecciones. Si tienes instalado uno que te ralentiza demasiado el PC, estudiar coger otro que te funcione mejor.
 
 Descargue un antivirus gratuito o desde su Windows Defender. Vaya al apartado de Seguridad de Windows desde el buscador de Cortana. Entre en Protección contra virus y amenazas y pulse el botón “Examen rápido”. Windows Defender analizará su computadora en busca de malware y virus.
 
