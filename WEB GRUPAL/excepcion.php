@@ -22,8 +22,15 @@
 	
 <?php	
 	include_once("cabecera.php"); 
-?>	
 
+	if (isset($_SESSION['login'])) {	?>
+	<nav>
+	<ul class="topnav" id="myTopnav">	
+		<li><a href="logout.php">Desconectar</a></li>
+	</ul>
+	</nav>
+	<?php } ?>
+	
 	<div>
 		<h2>Ups!</h2>
 		<?php if ($destino<>"") { ?>
