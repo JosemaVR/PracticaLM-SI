@@ -10,6 +10,7 @@
 		$_SESSION["articulo"] = $articulo;
 			
 		if (isset($_REQUEST["editar"])) Header("Location: consultaArticulos.php"); 
+		else if (isset($_REQUEST["grabar"])) Header("Location: accionModificarArticulo.php");
 		else if (isset($_REQUEST["borrar"])) Header("Location: accionBorrarArticulo.php");
 	}
 	else 
