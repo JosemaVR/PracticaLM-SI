@@ -93,7 +93,7 @@ function validarDatosUsuario($conexion, $nuevoUsuario){
 		$errores[] = "<p>La confirmación de contraseña no coincide con la contraseña</p>";
 	}
 	
-	// Validar Tipo de usuario
+	// Validar Tipo de inmueble
 	$error = validarIDTIPOUSUARIO($conexion, $nuevoUsuario["IDTIPOUSUARIO"]);
 	if($error!="")
 		$errores[] = $error;
@@ -141,7 +141,7 @@ function validarDNIPERSONA($conexion, $DNIPERSONA) {
 	}
 
 	if(count(array_unique(array_intersect($DNIPERSONAs_db, $DNIPERSONA_php))) > 0) {
-		$error = $error ."<p>Su DNI ya está registrado.</p>";
+		$error = $error ."<p>El DNIPERSONA ya existe.</p>";
 	}
 	return $error;
 }
@@ -155,7 +155,7 @@ function validarNOMBREUSUARIO($conexion, $usuario) {
 	}
 
 	if(count(array_unique(array_intersect($DNIPERSONAs_db, $DNIPERSONA_php))) > 0) {
-		$error = $error ."<p>El nombre de usuario ya está registrado.</p>";
+		$error = $error ."<p>El NOMBREPERSONA de usuario ya existe.</p>";
 	}
 	return $error;
 }
@@ -170,7 +170,7 @@ function validarCORREOPERSONA($conexion, $usuario) {
 	}
 
 	if(count(array_unique(array_intersect($DNIPERSONAs_db, $DNIPERSONA_php))) > 0) {
-		$error = $error ."<p>El correo ya está registrado.</p>";
+		$error = $error ."<p>El CORREOPERSONA ya existe.</p>";
 	}
 	return $error;
 }

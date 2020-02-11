@@ -28,14 +28,14 @@
 <body>
 
 	<main id="altaUsuario">
-		<?php if (altaUsuario($conexion, $nuevoUsuario)) { 
-				header("Location: consultaArticulos.php");
-		} else { ?>
-				<h1>Ha ocurrido un error.</h1>
+		<?php if (altaUsuario($conexion, $nuevoUsuario)) { ?>
+			<h1>Ha ocurrido un error.</h1>
 				<div>	
 					Pulsa <a href="formAltaUsuario.php">aquí</a> para volver al formulario.
 				</div>
-		<?php } ?>			
+		<?php } else {
+			header("Location: consultaArticulos.php");
+		} ?>			
 	</main>
 
 </body>

@@ -25,7 +25,7 @@ CREATE TABLE personas (
 CREATE TABLE usuarios (
 	idUsuario INT NOT NULL CONSTRAINT usuario_pk PRIMARY KEY,
 	nombreUsuario VARCHAR(50) NOT NULL,
-	passUsuario VARCHAR(50) NOT NULL,
+	passUsuario VARCHAR(150) NOT NULL,
     idTipoUsuarioFK INT NOT NULL,
     idPersonaFK INT NOT NULL,
     CONSTRAINT tipoUsuarioFK FOREIGN KEY (idTipoUsuarioFK) REFERENCES TIPOSUSUARIO(idTipoUsuario),
