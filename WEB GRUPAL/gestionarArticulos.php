@@ -5,6 +5,22 @@
      * #	de libros de la capa de acceso a datos 		
      * #==========================================================#
      */
+function altaArticulo($conexion,$articulo) {
+    $tipo = implode('', $articulo["IDTIPOUSUARIO"]);
+    try {
+        $consulta = "CALL InsertarArticulos(:NOMBREARTICULO, :CONTENIDOARTICULO, :IDUSUARIOFK)";
+        $stmt=$conexion->prepare($consulta);
+        $stmt->bindParam(':NOMBREARTICULO',$usuario["NOMBREARTICULO"]);
+		$stmt->bindParam(':CONTENIDOARTICULO',$usuario["CONTENIDOARTICULO"]);
+        $stmt->bindParam(':IDUSUARIOFK',$tipo);        
+
+        $stmt->execute();
+    } catch(PDOException $e) {
+        return $e->getMessage();
+        
+    }
+}
+	 
      
 function consultaArticulos($conexion) {
 	$consulta = "SELECT * FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario";
