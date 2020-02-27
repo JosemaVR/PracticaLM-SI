@@ -1,10 +1,4 @@
 <?php
-  /*
-     * #===========================================================#
-     * #	Este fichero contiene las funciones de gestión     			 
-     * #	de libros de la capa de acceso a datos 		
-     * #==========================================================#
-     */
      
 function consultaArticulos($conexion) {
 	$consulta = "SELECT * FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario";

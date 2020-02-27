@@ -1,11 +1,8 @@
-
 <?php
 	session_start();
-	
 	// Importar librerías necesarias para gestionar direcciones y géneros literarios
 	require_once("gestionBD.php");
 	require_once("gestionarUsuarios.php");
-	
 	// Si no existen datos del formulario en la sesión, se crea una entrada con valores por defecto
 	if (!isset($_SESSION['formulario'])) {
 		$formulario['NOMBREUSUARIO'] = "";
@@ -29,12 +26,9 @@
 		$errores = $_SESSION["errores"];
 		unset($_SESSION["errores"]);
 	}
-	
-	
 	// Creamos una conexión con la BD
 	$conexion = crearConexionBD();
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -44,7 +38,6 @@
   <script src="js/validacion_cliente_alta_usuario.js" type="text/javascript"></script>
   <title>Gestión de Usuarios: Nuevo usuario</title>
 </head>
-
 <body>
 	<script>
 		// Inicialización de elementos y eventos cuando el documento se carga completamente
@@ -55,7 +48,6 @@
 			});
 		});
 	</script>
-	
 	<?php 
 		// Mostrar los erroes de validación (Si los hay)
 		if (isset($errores) && count($errores)>0) { 
@@ -67,7 +59,6 @@
     		echo "</div>";
   		}
 	?>
-	
 	<form id="altaUsuario" method="get" action="accionAltaUsuario.php" onsubmit="return validateForm()">
 		<p><i>¡¡¡TODOS LOS CAMPOS SON OBLIGATORIOS!!!</i>		
 			<fieldset>
@@ -116,13 +107,10 @@
 			</div>
 		</fieldset>
 		<p><i>¡¡¡TODOS LOS CAMPOS SON OBLIGATORIOS!!!</i>		
-
 		<div><input type="submit" value="Enviar" /></div>
 	</form>
-	
 	<?php
 		cerrarConexionBD($conexion);
 	?>
-	
 	</body>
 </html>
