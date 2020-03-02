@@ -1,0 +1,61 @@
+<?php
+
+//FALTA METER COMO SE RECOGERIA IDAUTOR...
+
+	session_start();
+	// Importar librerías necesarias para gestionar direcciones y géneros literarios
+	require_once("gestionBD.php");
+	require_once("gestionarArticulos.php");
+	// Si no existen datos del formulario en la sesión, se crea una entrada con valores por defecto
+	if (!isset($_SESSION['formArticulo'])) {
+		$formArticulo['NOMBREARTICULO'] = "";
+		$formArticulo['CONTENIDOARTICULO'] = "";
+		//el safri del futuro acabó decidiendo no escribir aquí nada sobre idarticulo ni idautor ya que no hay ninguna insercion
+		
+		
+		$_SESSION['formArticulo'] = $formArticulo;
+	}
+	
+	else
+		$formArticulo = $_SESSION['formArticulo'];
+	
+	if (isser($_SESSION["errores"])){
+		$errores =$_SESSION["errores"];
+		unset($_SESSION["errores"]);
+	}
+	
+	$conexion = crearConexionBD();
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/styleArticulo.css"/>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
+	<script src="js/validation_alta_articulo.js" type="text/javascript"></script>
+	<title>Gestión de Artículos: Nuevo arttículo</title>
+	</head>
+	<body>
+		<?php
+			if (isset($errores) && count($errores)>0) { 
+	    	echo "<div id=\"div_errores\" class=\"error\">";
+			echo "<h4> Errores en el formulario:</h4>";
+    		foreach($errores as $error){
+    			echo $error;
+			} 
+    		echo "</div>";
+			}
+		?>
+		
+		<form id="altaArticulo" method="get" action="accionAltaArticulo.php" onsubmit="return validateForm()">
+		<fieldset>
+		
+		<div><label for="NOMBREARTICULO">Títutlo</label>
+		<input type="text" name="NOMBREARTICULO" id="NOMBREARTICULO" size="50" value="<?php echo $formAlticulo['NOMBREARTICULO'];?>" required />
+		</div>
+		<br/>
+		<div><input type="text" name="CONTENIDOARTICULO" id="CONTENIDOARTICULO" size="4000" value="<?php $formArticulo['CONTENIDOARTICULO'];?>" required />
+		</div>
+		
+		</form>
+	</body>
