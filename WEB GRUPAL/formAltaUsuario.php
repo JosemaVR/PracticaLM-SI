@@ -39,6 +39,9 @@
   <title>Gestión de Usuarios: Nuevo usuario</title>
 </head>
 <body>
+	<?php
+include_once ("menu.php");
+?>
 	<script>
 		// Inicialización de elementos y eventos cuando el documento se carga completamente
 		$(document).ready(function() {

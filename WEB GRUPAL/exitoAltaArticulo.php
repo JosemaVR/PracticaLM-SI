@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	require_once("gestionBD.php");
-	require_once("gestionarArticulo.php");
+	require_once("gestionarArticulos.php");
 	// Comprobar que hemos llegado a esta página porque se ha rellenado el formArticulo
 	if (isset($_SESSION["formArticulo"])) {
 		$nuevoArticulo = $_SESSION["formArticulo"];

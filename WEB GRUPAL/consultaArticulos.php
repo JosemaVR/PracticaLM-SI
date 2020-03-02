@@ -2,6 +2,7 @@
 	session_start();
 	require_once("gestionBD.php");
 	require_once("gestionarArticulos.php");
+	require_once ("gestionarUsuarios.php");
 	require_once ("paginacion_consulta.php");
 if (isset($_SESSION["articulo"])) {
 		$articulo = $_SESSION["articulo"];
@@ -39,6 +40,9 @@ if (isset($_SESSION["articulo"])) {
   <title>Inicio</title>
 </head>
 <body>
+	<?php
+include_once ("menu.php");
+?>
 <main>
 	<?php
 		foreach($filas as $fila) {

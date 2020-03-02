@@ -6,10 +6,12 @@
 	// Importar librerías necesarias para gestionar direcciones y géneros literarios
 	require_once("gestionBD.php");
 	require_once("gestionarArticulos.php");
+	require_once ("gestionarUsuarios.php");
 	// Si no existen datos del formulario en la sesión, se crea una entrada con valores por defecto
 	if (!isset($_SESSION['formArticulo'])) {
 		$formArticulo['NOMBREARTICULO'] = "";
 		$formArticulo['CONTENIDOARTICULO'] = "";
+		$formArticulo['IDAUTOR'] = "";
 		//el safri del futuro acabó decidiendo no escribir aquí nada sobre idarticulo ni idautor ya que no hay ninguna insercion
 		
 		
@@ -19,7 +21,7 @@
 	else
 		$formArticulo = $_SESSION['formArticulo'];
 	
-	if (isser($_SESSION["errores"])){
+	if (isset($_SESSION["errores"])){
 		$errores =$_SESSION["errores"];
 		unset($_SESSION["errores"]);
 	}
@@ -37,6 +39,9 @@
 	</head>
 	<body>
 		<?php
+include_once ("menu.php");
+?>
+		<?php
 			if (isset($errores) && count($errores)>0) { 
 	    	echo "<div id=\"div_errores\" class=\"error\">";
 			echo "<h4> Errores en el formulario:</h4>";
@@ -51,11 +56,11 @@
 		<fieldset>
 		
 		<div><label for="NOMBREARTICULO">Títutlo</label>
-		<input type="text" name="NOMBREARTICULO" id="NOMBREARTICULO" size="50" value="<?php echo $formAlticulo['NOMBREARTICULO'];?>" required />
+		<input type="text" name="NOMBREARTICULO" id="NOMBREARTICULO" size="50" value="<?php echo $formArticulo['NOMBREARTICULO'];?>" required />
 		</div>
 		<br/>
-		<div><input type="text" name="CONTENIDOARTICULO" id="CONTENIDOARTICULO" size="4000" value="<?php $formArticulo['CONTENIDOARTICULO'];?>" required />
+		<div><textarea type="text" name="CONTENIDOARTICULO" id="CONTENIDOARTICULO" cols="150" value="<?php $formArticulo['CONTENIDOARTICULO'];?>" required></textarea>
 		</div>
-		
+		<div><input type="submit" value="Enviar" /></div>
 		</form>
 	</body>

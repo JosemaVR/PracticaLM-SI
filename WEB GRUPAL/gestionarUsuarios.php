@@ -49,4 +49,12 @@ function altaUsuario($conexion,$usuario) {
     return $stmt->fetchColumn();
 }
 
+    function consultarIdUsuario($conexion,$NOMBREUSUARIO) {
+    $consulta = 'SELECT IDUSUARIO FROM USUARIOS WHERE NOMBREUSUARIO = :NOMBREUSUARIO';
+    $stmt = $conexion->prepare($consulta);
+    $stmt->bindParam(':NOMBREUSUARIO',$NOMBREUSUARIO);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+
 ?>

@@ -1,14 +1,13 @@
 <?php
-	 session_start();
+	session_start();
 	 
 	require_once("gestionBD.php");
 	require_once("gestionarArticulos.php");
 	
 	if (isset($_SESSION['formArticulo'])) {
-		$nuevoArticulo["IDARTICULO"] = ¿?
 		$nuevoArticulo["NOMBREARTICULO"] = $_REQUEST["NOMBREARTICULO"];
 		$nuevoArticulo["CONTENIDOARTICULO"] = $_REQUEST["CONTENIDOARTICULO"];
-		$nuevoArticulo["IDAUTOR"] = $_REQUES[];
+		$nuevoArticulo["IDAUTOR"] = $_REQUEST["CONTENIDOARTICULO"];;
 		//safri del futuro decidió poner aquí idarticulo e idautor pero no sabe que poner
 		
 	} else
@@ -50,7 +49,6 @@ function validarDatosArticulo($conexion, $nuevoArticulo) {
 	$error = validarContenidoArticulo($conexion, $nuevoArticulo["CONTENIDOARTICULO"]);
 	if($error!="")
 		$errores[] = $error;	
-}
 	
 function validarNOMBREARTICULO($conexion, $articulos) {	
 	$error="";
