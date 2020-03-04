@@ -111,7 +111,6 @@ include_once ("menu.php");
 	</form>
 </article>
 	<?php } ?>
-}
 </main>
 </body>
 </html>
