@@ -17,12 +17,11 @@ function eliminarArticulo($conexion,$articulo) {
     }
 }
 
-function modificarArticulo($conexion,$IDARTICULO, $NOMBREARTICULO, $CONTENIDOARTICULO) {
+function modificarArticulo($conexion,$IDARTICULO, $NOMBREARTICULO) {
     try {
-        $stmt=$conexion->prepare('CALL modificarArticulo(:IDARTICULO,:NOMBREARTICULO,:CONTENIDOARTICULO)');
+        $stmt=$conexion->prepare('CALL modificarArticulo(:IDARTICULO,:NOMBREARTICULO)');
         $stmt->bindParam(':IDARTICULO',$IDARTICULO);
         $stmt->bindParam(':NOMBREARTICULO',$NOMBREARTICULO);
-        $stmt->bindParam(':CONTENIDOARTICULO',$CONTENIDOARTICULO);
         $stmt->execute();
         return "";
     } catch(PDOException $e) {

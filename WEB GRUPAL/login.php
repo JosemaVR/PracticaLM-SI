@@ -50,6 +50,7 @@ include_once ("menu.php");
 		<div><label for="pass">Contraseña: </label><input type="password" name="pass" id="pass" required/></div>
 		<input type="submit" name="submit" value="submit" />
 	</form>
+	<a href="formAltaUsuarioNuevo.php">¿No está registrado? Pulse aquí</a>	
 		
 </main>
 </body>

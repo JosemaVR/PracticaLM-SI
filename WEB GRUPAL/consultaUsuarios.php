@@ -1,12 +1,11 @@
 <?php
 	session_start();
 	require_once("gestionBD.php");
-	require_once("gestionarArticulos.php");
 	require_once ("gestionarUsuarios.php");
 	require_once ("paginacion_consulta.php");
-if (isset($_SESSION["articulo"])) {
-		$articulo = $_SESSION["articulo"];
-		unset($_SESSION["articulo"]);
+if (isset($_SESSION["usuario"])) {
+		$usuario = $_SESSION["usuario"];
+		unset($_SESSION["usuario"]);
 	}
 	// ¿Venimos simplemente de cambiar página o de haber seleccionado un registro ?
 	// ¿Hay una sesión activa?
@@ -19,7 +18,7 @@ if (isset($_SESSION["articulo"])) {
 	unset($_SESSION["paginacion"]);
 	$conexion = crearConexionBD();
 	// La consulta que ha de paginarse
-	$query = "SELECT * FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario";
+	$query = "SELECT * FROM USUARIOS, TIPOSUSUARIO, PERSONAS where USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario and PERSONAS.idPersona=USUARIOS.idPersonaFK";
 	// Se comprueba que el tamaño de página, página seleccionada y total de registros son conformes.
 	// En caso de que no, se asume el tamaño de página propuesto, pero desde la página 1
 	$total_registros = total_consulta($conexion, $query);
@@ -47,45 +46,65 @@ include_once ("menu.php");
 	<?php
 		foreach($filas as $fila) {
 	?>
-<article class="articulo" id="articleArticulo">
-	<form method="post" action="controladorArticulos.php">
-		<div class="filaArticulo">
-			<div class="datosArticulo">
-				<input id="IDARTICULO" name="IDARTICULO"
-					type="hidden" value="<?php echo $fila["IDARTICULO"]; ?>"/>
-				<input id="NOMBREARTICULO" name="NOMBREARTICULO"
-					type="hidden" value="<?php echo $fila["NOMBREARTICULO"]; ?>"/>
+<article class="usuario" id="articleUsuario">
+	<form method="post" action="controladorUsuarios.php">
+		<div class="filaUsuario">
+			<div class="datosUsuario">
+				<input id="IDUSUARIO" name="IDUSUARIO"
+					type="hidden" value="<?php echo $fila["IDUSUARIO"]; ?>"/>
+				<input id="NOMBRETIPOUSUARIO" name="NOMBRETIPOUSUARIO"
+					type="hidden" value="<?php echo $fila["NOMBRETIPOUSUARIO"]; ?>"/>
 				<input id="NOMBREUSUARIO" name="NOMBREUSUARIO"
 					type="hidden" value="<?php echo $fila["NOMBREUSUARIO"]; ?>"/>
-				<input id="FECHAARTICULO" name="FECHAARTICULO"
-					type="hidden" value="<?php echo $fila["FECHAARTICULO"]; ?>"/>
-				<?php if (isset($articulo) and ($articulo["IDARTICULO"] == $fila["IDARTICULO"])) { ?>
+				<input id="IDTIPOUSUARIO" name="IDTIPOUSUARIO"
+					type="hidden" value="<?php echo $fila["IDTIPOUSUARIO"]; ?>"/>
+				<input id="CORREOPERSONA" name="CORREOPERSONA"
+					type="hidden" value="<?php echo $fila["CORREOPERSONA"]; ?>"/>
+
+				<?php if (isset($usuario) and ($usuario["IDUSUARIO"] == $fila["IDUSUARIO"])) { ?>
 						<!-- Editando título -->
 						<div class="Info">
-							<em><input id="NOMBREARTICULO" name="NOMBREARTICULO" type="text" value="<?php echo  $fila["NOMBREARTICULO"];?>"/></em>
-							<b><?php echo  ", de " . $fila["NOMBREUSUARIO"] . ", el ". $fila["FECHAARTICULO"]; ?></b>
+							<b><?php echo "Cargo: " ?></b>
+							<em>
+								<input id='IDTIPONUEVO' name='IDTIPONUEVO' style="display:none" type='text' value='1' />
+								<script>
+									function myFunction(e) {
+    									document.getElementById("IDTIPONUEVO").value = e.target.value
+									}
+								</script>
+								<select name="" id="IDTIPO" onchange="myFunction(event)" required>
+									<?php	$tipos = listarTipoUsuario($conexion);
+										foreach ($tipos as $tipo) {
+											if(in_array($tipo["IDTIPOUSUARIO"], $fila['IDTIPOUSUARIO'])){
+												echo "<option value='" . $tipo["IDTIPOUSUARIO"] . "' label='" . $tipo["NOMBRETIPOUSUARIO"] . "' selected/>";
+											} else {
+												echo "<option value='" . $tipo["IDTIPOUSUARIO"] . "' label='" . $tipo["NOMBRETIPOUSUARIO"] . "'/>";
+											}
+										} 
+									?>
+								</select>
+							</em>
+							<b><?php echo " - Nick: " . $fila["NOMBREUSUARIO"] . " - Nivel: ". $fila["IDTIPOUSUARIO"] ." - Email: ". $fila["CORREOPERSONA"]; ?></b>
 						</div>
-						<div class="Contenido">Contenido: <?php echo  $fila['CONTENIDOARTICULO'];?></div>
 				<?php }	else { ?>
 						<!-- mostrando título -->
 						<div class="Info">
-							<b><?php echo $fila["NOMBREARTICULO"] . ", de " . $fila["NOMBREUSUARIO"] . ", el ". $fila["FECHAARTICULO"]; ?></b>
+							<b><?php echo "Cargo: ". $fila["NOMBRETIPOUSUARIO"] . " - Nick: " . $fila["NOMBREUSUARIO"] . " - Nivel: ". $fila["IDTIPOUSUARIO"] ." - Email: ". $fila["CORREOPERSONA"]; ?></b>
 						</div>
-						<div class="Contenido">Contenido: <?php echo  $fila['CONTENIDOARTICULO'];?></div>
 				<?php } ?>
 			</div>
 			<div id="botones_fila">
-				<?php if (isset($articulo) and ($articulo["IDARTICULO"] == $fila["IDARTICULO"])) { ?>
+				<?php if (isset($usuario) and ($usuario["IDUSUARIO"] == $fila["IDUSUARIO"])) { ?>
 					<button id="grabar" name="grabar" type="submit" class="editar_fila">
 						<img src="images/bag_menuito.bmp" class="editar_fila" alt="Guardar modificación" onclick="return confirm('¿Está seguro de modificar?');">
 					</button>
 				<?php } else { ?>
 					<button id="editar" name="editar" type="submit" class="editar_fila" >
-						<img src="images/pencil_menuito.bmp" class="editar_fila" alt="Editar articulo">
+						<img src="images/pencil_menuito.bmp" class="editar_fila" alt="Editar usuario">
 					</button>
 				<?php } ?>
 					<button id="borrar" name="borrar" type="submit" class="editar_fila" onclick="return confirm('¿Está seguro de eliminar?');">
-						<img src="images/remove_menuito.bmp" class="editar_fila" alt="Borrar articulo"  >
+						<img src="images/remove_menuito.bmp" class="editar_fila" alt="Borrar usuario"  >
 					</button>
 			</div>
 		</div>
