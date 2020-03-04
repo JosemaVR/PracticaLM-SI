@@ -74,6 +74,7 @@ include_once ("menu.php");
 						<div class="Contenido">Contenido: <?php echo  $fila['CONTENIDOARTICULO'];?></div>
 				<?php } ?>
 			</div>
+			<?php if ((consultarTipoUsuario($conexion, $_SESSION['login'])) == 1) { ?>				
 			<div id="botones_fila">
 				<?php if (isset($articulo) and ($articulo["IDARTICULO"] == $fila["IDARTICULO"])) { ?>
 					<button id="grabar" name="grabar" type="submit" class="editar_fila">
@@ -88,6 +89,7 @@ include_once ("menu.php");
 						<img src="images/remove_menuito.bmp" class="editar_fila" alt="Borrar articulo"  >
 					</button>
 			</div>
+		<?php } ?>
 		</div>
 	</form>
 </article>

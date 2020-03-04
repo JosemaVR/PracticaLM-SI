@@ -59,8 +59,26 @@ include_once ("menu.php");
 		<input type="text" name="NOMBREARTICULO" id="NOMBREARTICULO" size="50" value="<?php echo $formArticulo['NOMBREARTICULO'];?>" required />
 		</div>
 		<br/>
+		<script>
+			function myFunction(e) {
+    			document.getElementById("CONTENIDOARTICULO").value = e.target.value
+			}
+		</script>
 		<div><textarea type="text" name="CONTENIDOARTICULO" id="CONTENIDOARTICULO" cols="150" value="<?php $formArticulo['CONTENIDOARTICULO'];?>" required></textarea>
 		</div>
+		<div>
+			<ul>
+  				<li><label>Enlace externo</label><xmp onclick="addText(event)"><a href="direccionWeb" target="_blank">nombreMostrado</a></xmp></li>
+ 	 			<li><label>Imagen</label><xmp onclick="addText(event)"><img src="enlaceImagen" alt="nombreImagen"></xmp></li></li>
+			</ul>
+			<script>
+    			function addText(event) {
+    				var targ = event.target || event.srcElement;
+    				document.getElementById("CONTENIDOARTICULO").value += targ.textContent || targ.innerText;
+				}
+			</script>
+		</div>
+
 		<div><input type="submit" value="Enviar" /></div>
 		</form>
 	</body>

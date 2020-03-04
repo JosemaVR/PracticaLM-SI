@@ -85,7 +85,7 @@ include_once ("menu.php");
 								</select>
 							</em>
 							<b><?php echo " - Nick: " . $fila["NOMBREUSUARIO"] . " - Nivel: ". $fila["IDTIPOUSUARIO"] ." - Email: ". $fila["CORREOPERSONA"]; ?></b>
-						</div>
+						</div>	
 				<?php }	else { ?>
 						<!-- mostrando título -->
 						<div class="Info">
@@ -111,6 +111,7 @@ include_once ("menu.php");
 	</form>
 </article>
 	<?php } ?>
+}
 </main>
 </body>
 </html>
