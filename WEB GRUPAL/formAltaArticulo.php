@@ -39,9 +39,8 @@
 	</head>
 	<body>
 		<?php
-include_once ("menu.php");
-?>
-		<?php
+			include_once ("menu.php");
+		
 			if (isset($errores) && count($errores)>0) { 
 	    	echo "<div id=\"div_errores\" class=\"error\">";
 			echo "<h4> Errores en el formulario:</h4>";
@@ -51,7 +50,6 @@ include_once ("menu.php");
     		echo "</div>";
 			}
 		?>
-		
 		<form id="altaArticulo" method="get" action="accionAltaArticulo.php" onsubmit="return validateForm()">
 		<fieldset>
 		

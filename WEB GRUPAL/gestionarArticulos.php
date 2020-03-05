@@ -2,10 +2,15 @@
 require_once("gestionarUsuarios.php");
 
 function consultaArticulos($conexion) {
-	$consulta = "SELECT * FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario";
+    $consulta = "SELECT * FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario order by ARTICULOS.FECHAARTICULO DESC";
     return $conexion->query($consulta);
 }
-	
+
+function verArticulo($conexion, $idArticulo) {
+    $consulta = "SELECT * FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario and ARTICULOS.idArticulo = $idArticulo order by ARTICULOS.FECHAARTICULO DESC";
+    return $conexion->query($consulta);
+}
+  
 function eliminarArticulo($conexion,$articulo) {
     try {
         $stmt=$conexion->prepare('CALL eliminarArticulo(:IDARTICULO)');

@@ -18,7 +18,6 @@
 <body>	
 	
 <?php	
-	include_once("cabecera.php"); 
 	if (isset($_SESSION['login'])) {	?>
 	<nav>
 	<ul class="topnav" id="myTopnav">	
@@ -37,10 +36,6 @@
 	<div class='excepcion'>	
 		<?php echo "Información relativa al problema: $excepcion;" ?>
 	</div>
-
-<?php	
-	include_once("pie.php");
-?>	
 
 </body>
 </html>
