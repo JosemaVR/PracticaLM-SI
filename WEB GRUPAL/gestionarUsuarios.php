@@ -63,7 +63,7 @@ function listarTipoUsuario($conexion){
     }
 }
 
-    function listarUsuarios($conexion){
+function listarUsuarios($conexion){
     try{
         $consulta = "SELECT * from usuarios, personas, tiposUsuario where idPersona = idPersonaFK and idTipoUsuario = idTipoUsuarioFK";
         $stmt = $conexion->query($consulta);
