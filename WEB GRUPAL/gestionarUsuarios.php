@@ -65,7 +65,7 @@ function listarTipoUsuario($conexion){
 
 function listarUsuarios($conexion){
     try{
-        $consulta = "SELECT * from usuarios, personas, tiposUsuario where idPersona = idPersonaFK and idTipoUsuario = idTipoUsuarioFK";
+        $consulta = "SELECT * from usuarios, personas, tiposUsuario where idPersona = idPersonaFK and idTipoUsuario = idTipoUsuarioFK ORDER BY NOMBREUSUARIO ASC";
         $stmt = $conexion->query($consulta);
         return $stmt;
     }catch(PDOException $e) {

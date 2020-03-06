@@ -35,6 +35,8 @@ function validarDatosArticulo($conexion, $nuevoArticulo) {
 	
 	if($nuevoArticulo["NOMBREARTICULO"]=="")  {
 		$errores[] = "<p>El título no puede estar vacío</p>";
+	} else if (strlen($nuevoArticulo["NOMBREARTICULO"]) > 50 ){
+		$errores[] = "<p>El título no puede ser mayor de 50 carácteres.</p>";
 	}
 	
 	if($nuevoArticulo["CONTENIDOARTICULO"]=="") 

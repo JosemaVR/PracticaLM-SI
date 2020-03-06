@@ -10,6 +10,7 @@ if (isset($_SESSION["articulo"])) {
 	$conexion = crearConexionBD();
 	// La consulta que ha de paginarse
 	$filas = consultaArticulos($conexion);
+	$filas2 = consultaArticulos($conexion);
 	cerrarConexionBD($conexion);
 ?>
 <!DOCTYPE html>
@@ -36,13 +37,31 @@ if (isset($_SESSION["articulo"])) {
 </head>
 <body>
 	<?php
-include_once ("menu.php");
-?>
+		include_once ("menu.php");
+	?>
 <main>
+	<div style="position:fixed;right:50px;clear:left; "
+<ul >
+<?php	
+	$filas2 = consultaArticulos($conexion);
+	foreach($filas2 as $fila2) {
+?>
+<li>
+<div id="<?php echo "articulo" . $fila2['idArticulo'] ?>" style="text-align:left;position:relative;float:right;" name="indice"><a href='<?php echo "#articulo" . $fila2["IDARTICULO"] ?>'><?php echo  $fila2['NOMBREARTICULO'];?></a>
+</div>
+</li>
+
+<?php
+	}
+?>
+</ul>
+</div>
 	<?php
 		foreach($filas as $fila) {
 	?>
-<article class="articulo" id="articleArticulo">
+
+<div style="width:70%;">
+<article class="articulo" id="<?php echo "articulo" .$fila['IDARTICULO'] ?>">
 	<form method="post" action="controladorArticulos.php">
 		<div class="filaArticulo">
 			<div class="datosArticulo">
@@ -94,7 +113,9 @@ include_once ("menu.php");
 		</div>
 	</form>
 </article>
+</div>
 	<?php } ?>
+
 </main>
 </body>
 </html>
