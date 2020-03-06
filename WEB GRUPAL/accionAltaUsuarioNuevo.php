@@ -14,7 +14,7 @@
 		$nuevoUsuario["NOMBREUSUARIO"] = $_REQUEST["NOMBREUSUARIO"];		
 		$nuevoUsuario["PASSUSUARIO"] = $_REQUEST["PASSUSUARIO"];		
 		$nuevoUsuario["confirmpass"] = $_REQUEST["confirmpass"];
-		$nuevoUsuario["IDTIPOUSUARIO"] = $_REQUEST["IDTIPOUSUARIO"];
+		$nuevoUsuario["IDTIPOUSUARIO"] = "";
 	
 	} else // En caso contrario, vamos al formulario
 		Header("Location: formAltaUsuario.php");
@@ -29,16 +29,16 @@
 	}catch(PDOException $e){
 		// Mensaje de depuración
 		$_SESSION["errores"] = "<p>ERROR en la validación: fallo en el acceso a la base de datos.</p><p>" . $e->getMessage() . "</p>";
-		Header('Location: formAltaUsuario.php');
+		Header('Location: formAltaUsuarioNuevo.php');
 	}
 		// Si se han detectado errores
 	if (count($errores)>0) {
 		// Guardo en la sesión los mensajes de error y volvemos al formulario
 		$_SESSION["errores"] = $errores;
-		Header('Location: formAltaUsuario.php');
+		Header('Location: formAltaUsuarioNuevo.php');
 	} else
 		// Si todo va bien, vamos a la página de éxito (inserción del usuario en la base de datos)
-		Header('Location: exitoAltaUsuario.php');
+		Header('Location: exitoAltaUsuarioNuevo.php');
 ///////////////////////////////////////////////////////////
 // Validación en servidor del formulario de alta de usuario
 ///////////////////////////////////////////////////////////
@@ -83,11 +83,6 @@ function validarDatosUsuario($conexion, $nuevoUsuario){
 	}else if($nuevoUsuario["PASSUSUARIO"] != $nuevoUsuario["confirmpass"]){
 		$errores[] = "<p>La confirmación de contraseña no coincide con la contraseña</p>";
 	}
-	
-	// Validar Tipo de inmueble
-	$error = validarIDTIPOUSUARIO($conexion, $nuevoUsuario["IDTIPOUSUARIO"]);
-	if($error!="")
-		$errores[] = $error;
 
 		// Validar DNIPERSONA
 	$error = validarDNIPERSONA($conexion, $nuevoUsuario["DNIPERSONA"]);
@@ -105,21 +100,6 @@ function validarDatosUsuario($conexion, $nuevoUsuario){
 		$errores[] = $error;
 		
 	return $errores;
-}
-
-function validarIDTIPOUSUARIO($conexion, $tipos){
-	$error="";
-	$tipos_db = array(); 
-	$db = listarTipoUsuario($conexion);
-	foreach ($db as $tipo_db){
-		$tipos_db[] = $tipo_db["IDTIPOUSUARIO"];
-	}
-	
-	if(count(array_intersect($tipos_db, $tipos)) < count($tipos)){
-		$error = $error ."<p>El tipo de usuario no es válido</p>";
-	}
-	
-	return $error;
 }
 
 function validarDNIPERSONA($conexion, $DNIPERSONA) {	

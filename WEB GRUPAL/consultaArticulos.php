@@ -1,60 +1,43 @@
 <?php
 	session_start();
-
 	require_once("gestionBD.php");
 	require_once("gestionarArticulos.php");
-	require_once ("paginacion_consulta.php");
-
+	require_once ("gestionarUsuarios.php");
 if (isset($_SESSION["articulo"])) {
 		$articulo = $_SESSION["articulo"];
 		unset($_SESSION["articulo"]);
 	}
-
-	// ¿Venimos simplemente de cambiar página o de haber seleccionado un registro ?
-	// ¿Hay una sesión activa?
-	if (isset($_SESSION["paginacion"]))
-		$paginacion = $_SESSION["paginacion"];
-	
-	$pagina_seleccionada = isset($_GET["PAG_NUM"]) ? (int)$_GET["PAG_NUM"] : (isset($paginacion) ? (int)$paginacion["PAG_NUM"] : 1);
-	$pag_tam = isset($_GET["PAG_TAM"]) ? (int)$_GET["PAG_TAM"] : (isset($paginacion) ? (int)$paginacion["PAG_TAM"] : 5);
-
-	if ($pagina_seleccionada < 1) 		$pagina_seleccionada = 1;
-	if ($pag_tam < 1) 		$pag_tam = 5;
-
-	// Antes de seguir, borramos las variables de sección para no confundirnos más adelante
-	unset($_SESSION["paginacion"]);
-
 	$conexion = crearConexionBD();
-
 	// La consulta que ha de paginarse
-	$query = "SELECT * FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario";
-
-	// Se comprueba que el tamaño de página, página seleccionada y total de registros son conformes.
-	// En caso de que no, se asume el tamaño de página propuesto, pero desde la página 1
-	$total_registros = total_consulta($conexion, $query);
-	$total_paginas = (int)($total_registros / $pag_tam);
-
-	if ($total_registros % $pag_tam > 0)		$total_paginas++;
-
-	if ($pagina_seleccionada > $total_paginas)		$pagina_seleccionada = $total_paginas;
-
-	// Generamos los valores de sesión para página e intervalo para volver a ella después de una operación
-	$paginacion["PAG_NUM"] = $pagina_seleccionada;
-	$paginacion["PAG_TAM"] = $pag_tam;
-	$_SESSION["paginacion"] = $paginacion;
-
-	$filas = consulta_paginada($conexion, $query, $pagina_seleccionada, $pag_tam);
-
+	$filas = consultaArticulos($conexion);
 	cerrarConexionBD($conexion);
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <title>Inicio</title>
+  <script type="text/javascript">
+  	function funcionVer(idArticulo){
+    	var x = document.getElementById(idArticulo);
+		var y = document.getElementsByName("Contenido");
+		if(x.style.display == "block"){
+			for (var k = 0; k<y.length; k++) {
+				y[k].style.display = "none";
+			}
+		} else {
+			for (var k = 0; k<y.length; k++) {
+				y[k].style.display = "none";
+			}
+	 		x.style.display = "block";
+		}	
+	}
+	</script>
 </head>
 <body>
+	<?php
+include_once ("menu.php");
+?>
 <main>
 	<?php
 		foreach($filas as $fila) {
@@ -71,25 +54,28 @@ if (isset($_SESSION["articulo"])) {
 					type="hidden" value="<?php echo $fila["NOMBREUSUARIO"]; ?>"/>
 				<input id="FECHAARTICULO" name="FECHAARTICULO"
 					type="hidden" value="<?php echo $fila["FECHAARTICULO"]; ?>"/>
+				<input id="CONTENIDOARTICULO" name="CONTENIDOARTICULO"
+					type="hidden" value="<?php $fila["CONTENIDOARTICULO"]; ?>"/>
+
 				<?php if (isset($articulo) and ($articulo["IDARTICULO"] == $fila["IDARTICULO"])) { ?>
 						<!-- Editando título -->
-						<input id="NOMBREARTICULO" name="NOMBREARTICULO" type="hidden" value=<?php echo $fila["NOMBREARTICULO"]; ?>/>
 						<div class="Info">
 							<em><input id="NOMBREARTICULO" name="NOMBREARTICULO" type="text" value="<?php echo  $fila["NOMBREARTICULO"];?>"/></em>
 							<b><?php echo  ", de " . $fila["NOMBREUSUARIO"] . ", el ". $fila["FECHAARTICULO"]; ?></b>
 						</div>
-						<div class="Contenido">
-							Contenido: <em><input id="CONTENIDOARTICULO" name="CONTENIDOARTICULO" type="text" value="<?php echo  $fila['CONTENIDOARTICULO'];?>"/></em>
-						</div>
+						<div id="<?php echo $fila['IDARTICULO'] ?>" style="display:none" name="Contenido">Contenido: <?php echo  $fila['CONTENIDOARTICULO'];?></div>
 				<?php }	else { ?>
 						<!-- mostrando título -->
-						<input id="NOMBREARTICULO" name="NOMBREARTICULO" type="hidden" value=<?php echo $fila["NOMBREARTICULO"]; ?>/>
 						<div class="Info">
 							<b><?php echo $fila["NOMBREARTICULO"] . ", de " . $fila["NOMBREUSUARIO"] . ", el ". $fila["FECHAARTICULO"]; ?></b>
 						</div>
-						<div class="Contenido">Contenido: <?php echo  $fila['CONTENIDOARTICULO'];?></div>
+						<div>
+							<label onclick="funcionVer(<?php echo $fila['IDARTICULO'] ?>)">Mostrar/Ocultar Artículo</label>
+						</div>						
+						<div id="<?php echo $fila['IDARTICULO'] ?>" id="CONTENIDOARTICULO" style="display:none" name="Contenido">Contenido: <?php echo  $fila['CONTENIDOARTICULO'];?></div>
 				<?php } ?>
 			</div>
+			<?php if ((consultarTipoUsuario($conexion, $_SESSION['login'])) == 1) { ?>				
 			<div id="botones_fila">
 				<?php if (isset($articulo) and ($articulo["IDARTICULO"] == $fila["IDARTICULO"])) { ?>
 					<button id="grabar" name="grabar" type="submit" class="editar_fila">
@@ -104,6 +90,7 @@ if (isset($_SESSION["articulo"])) {
 						<img src="images/remove_menuito.bmp" class="editar_fila" alt="Borrar articulo"  >
 					</button>
 			</div>
+			<?php } ?>
 		</div>
 	</form>
 </article>

@@ -62,51 +62,37 @@ include_once ("menu.php");
     		echo "</div>";
   		}
 	?>
-	<form id="altaUsuario" method="get" action="accionAltaUsuario.php" onsubmit="return validateForm()">
+	<form id="altaUsuario" method="get" action="accionAltaUsuarioNuevo.php" onsubmit="return validateForm()">
 		<p><i>¡¡¡TODOS LOS CAMPOS SON OBLIGATORIOS!!!</i>		
 			<fieldset>
-			<div><label for="DNIPERSONA">DNI: </label>
+			<div><label for="DNIPERSONA">DNI</label>
 			<input id="DNIPERSONA" name="DNIPERSONA" type="text" placeholder="12345678X" pattern="^[0-9]{8}[A-Z]" title="Ocho dígitos seguidos de una letra mayúscula" value="<?php echo $formulario['DNIPERSONA'];?>" required>
 			</div>
 
-			<div><label for="NOMBREPERSONA">Nombre: </label>
+			<div><label for="NOMBREPERSONA">Nombre:</label>
 			<input id="NOMBREPERSONA" name="NOMBREPERSONA" type="text" size="40" value="<?php echo $formulario['NOMBREPERSONA'];?>" required/>
 			</div>
 
-			<div><label for="APELLIDO1PERSONA">Primer apellido: </label>
+			<div><label for="APELLIDO1PERSONA">Primer apellido:</label>
 			<input id="APELLIDO1PERSONA" name="APELLIDO1PERSONA" type="text" size="80" value="<?php echo $formulario['APELLIDO1PERSONA'];?>"/>
 			</div>
 			
-			<div><label for="APELLIDO2PERSONA">Segundo apellido: </label>
+			<div><label for="APELLIDO2PERSONA">Segundo apellido:</label>
 			<input id="APELLIDO2PERSONA" name="APELLIDO2PERSONA" type="text" size="80" value="<?php echo $formulario['APELLIDO2PERSONA'];?>"/>
 			</div>
 
-			<div><label for="CORREOPERSONA">Email: </label>
+			<div><label for="CORREOPERSONA">Email:</label>
 			<input id="CORREOPERSONA" name="CORREOPERSONA"  type="email" placeholder="usuario@dominio.extension" value="<?php echo $formulario['CORREOPERSONA'];?>" required/><br>
 			</div>
 					
-			<div><label for="NOMBREUSUARIO">Usuario: </label>
+			<div><label for="NOMBREUSUARIO">Usuario:</label>
 				<input id="NOMBREUSUARIO" name="NOMBREUSUARIO" type="text" size="40" value="<?php echo $formulario['NOMBREUSUARIO'];?>" />
 			</div>
-			<div><label for="PASSUSUARIO">Contraseña: </label>
+			<div><label for="PASSUSUARIO">Contraseña:</label>
                 <input type="password" name="PASSUSUARIO" id="PASSUSUARIO" placeholder="Mínimo 8 caracteres entre letras y dígitos" oninput="passwordValidation();" required/>
 			</div>
 			<div><label for="confirmpass">Confirmar contraseña: </label>
 				<input type="password" name="confirmpass" id="confirmpass" placeholder="Confirmación de contraseña"  oninput="passwordConfirmation();" required/>
-			</div>
-			
-			<div><label for="IDTIPOUSUARIO">Cargo: </label>
-				<select name="IDTIPOUSUARIO[]" id="IDTIPOUSUARIO" required>
-					<?php	$tipos = listarTipoUsuario($conexion);
-						foreach ($tipos as $tipo) {
-						if(in_array($tipo["IDTIPOUSUARIO"], $formulario['IDTIPOUSUARIO'])){
-								echo "<option value='" . $tipo["IDTIPOUSUARIO"] . "' label='" . $tipo["NOMBRETIPOUSUARIO"] . "' selected/>";
-						} else {
-								echo "<option value='" . $tipo["IDTIPOUSUARIO"] . "' label='" . $tipo["NOMBRETIPOUSUARIO"] . "'/>";
-							}
-						}
-					?>
-				</select>
 			</div>
 		</fieldset>
 		<p><i>¡¡¡TODOS LOS CAMPOS SON OBLIGATORIOS!!!</i>		

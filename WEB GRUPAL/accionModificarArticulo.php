@@ -1,5 +1,4 @@
 <?php 
-
  session_start(); 
   
  if (isset($_SESSION["articulo"])) {
@@ -9,8 +8,6 @@
   require_once("gestionBD.php");
   require_once("gestionarArticulos.php");  
 
-   
-  
   try{ 
 		$conexion = crearConexionBD(); 
 		$errores = validarModificacion($conexion, $modificarArticulo);
@@ -21,8 +18,7 @@
 		Header('Location: consultaArticulos.php');
 	}
 
-
-  	if (count($errores)>0) {
+  if (count($errores)>0) {
 		$_SESSION["errores"] = $errores;
 		Header('Location: consultaArticulos.php');
   	} else {
@@ -35,8 +31,8 @@
    		Header("Location: excepcion.php");
   	} else
    		Header("Location: consultaArticulos.php");
- 	} 
- else Header("Location: consultaArticulos.php"); // Se ha tratado de acceder directamente a este PHP
+ } else Header("Location: consultaArticulos.php"); // Se ha tratado de acceder directamente a este PHP
+ 
  function validarModificacion($conexion, $modificarArticulo){
             $errores=array();
             // Validación del NIF

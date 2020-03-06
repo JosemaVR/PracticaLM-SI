@@ -1,5 +1,4 @@
 -- Funciones para la pagina web–-
-
 CREATE OR REPLACE PROCEDURE insertarArticulo
     (w_tituloArticulo IN ARTICULOS.NOMBREARTICULO%TYPE,
     w_contenidoArticulo IN ARTICULOS.CONTENIDOARTICULO%TYPE,
@@ -11,30 +10,6 @@ BEGIN
 COMMIT WORK;
 END insertarArticulo;
 /
-DROP PROCEDURE modificarArticulo;
-CREATE OR REPLACE PROCEDURE modificarArticulo
-    (w_idArticulo IN ARTICULOS.IDARTICULO%TYPE,
-    w_nombreArticulo IN ARTICULOS.NOMBREARTICULO%TYPE,
-    w_contenidoArticulo IN ARTICULOS.CONTENIDOARTICULO%TYPE)
-    IS
-    articulo int;
-    contenido int;
-BEGIN
-    SELECT COUNT(*) INTO articulo FROM ARTICULOS WHERE w_nombreArticulo=NOMBREARTICULO and idArticulo!=w_idArticulo;
-    SELECT COUNT(*) INTO contenido FROM ARTICULOS WHERE w_contenidoArticulo=CONTENIDOARTICULO and idArticulo!=w_idArticulo;
-    
-    IF (articulo>0 or contenido>0)
-        THEN raise_application_error (-20600, w_nombreArticulo||'. El titulo o el contenido no puede ser repetido.');
-    END IF;      
-    IF (articulo<1 and contenido<1) THEN
-        UPDATE ARTICULOS SET nombreArticulo=w_nombreArticulo WHERE IDARTICULO=w_idArticulo;
-        UPDATE ARTICULOS SET CONTENIDOARTICULO=w_contenidoArticulo WHERE IDARTICULO=w_idArticulo;
-    END IF;
-    
-COMMIT WORK;
-END modificarArticulo;
-/
-
 CREATE OR REPLACE PROCEDURE eliminarArticulo
     (w_IdArticulo IN ARTICULOS.IDARTICULO%TYPE)
     IS
@@ -43,7 +18,15 @@ BEGIN
 COMMIT WORK;
 END eliminarArticulo;
 /
-DROP PROCEDURE insertarUsuario;
+CREATE OR REPLACE PROCEDURE modificarArticulo
+    (w_IdArticulo IN ARTICULOS.IDARTICULO%TYPE,
+    w_nombreArticulo IN ARTICULOS.NOMBREARTICULO%TYPE)
+    IS
+BEGIN
+    UPDATE ARTICULOS SET NOMBREARTICULO = w_nombreArticulo WHERE w_IdArticulo = IDARTICULO;
+COMMIT WORK;
+END modificarArticulo;
+/
 CREATE OR REPLACE PROCEDURE insertarUsuario
     (w_nombreUsuario IN USUARIOS.NOMBREUSUARIO%TYPE,
     w_passUsuario IN USUARIOS.PASSUSUARIO%TYPE,
@@ -56,39 +39,54 @@ CREATE OR REPLACE PROCEDURE insertarUsuario
     IS
     w_idPersona PERSONAS.IDPERSONA%TYPE;
 BEGIN
-    INSERT INTO PERSONAS (IDPERSONA, DNIPERSONA, NOMBREPERSONA, APELLIDO1PERSONA, APELLIDO2PERSONA, CORREOPERSONA) 
-    values (null, w_dniPersona, w_nombrePersona, w_apellido1Persona, w_apellido2Persona, w_correoPersona);
-    SELECT idPersona INTO w_idPersona FROM PERSONAS WHERE w_dniPersona = dniPersona;
-    INSERT INTO USUARIOS (IDUSUARIO, NOMBREUSUARIO, PASSUSUARIO, IDTIPOUSUARIOFK, IDPERSONAFK) 
-    VALUES (null, w_nombreUsuario, w_passUsuario, w_idTipo, w_idPersona);
+    INSERT INTO PERSONAS values (null, w_dniPersona, w_nombrePersona, w_apellido1Persona, w_apellido2Persona, w_correoPersona);
+    SELECT IDPERSONA INTO w_idPersona FROM PERSONAS WHERE DNIPERSONA = w_dniPersona;
+    INSERT INTO USUARIOS VALUES (null, w_nombreUsuario, w_passUsuario, w_idTipo, w_idPersona);
 COMMIT WORK;
 END insertarUsuario;
 /
-
+CREATE OR REPLACE PROCEDURE modificarUsuario
+    (w_IdUsuario IN USUARIOS.IDUSUARIO%TYPE,
+    w_idTipo IN USUARIOS.IDTIPOUSUARIOFK%TYPE)
+    IS
+BEGIN
+    UPDATE USUARIOS SET IDTIPOUSUARIOFK = w_idTipo WHERE w_IdUsuario = IDUSUARIO;
+COMMIT WORK;
+END modificarUsuario;
+/
 CREATE OR REPLACE PROCEDURE eliminarUsuario
     (w_IdUsuario IN USUARIOS.IDUSUARIO%TYPE)
     IS
+    w_idPersona PERSONAS.IDPERSONA%TYPE;
 BEGIN
+    DELETE FROM ARTICULOS WHERE w_idUsuario = IDUSUARIOFK;
+    SELECT IDPERSONAFK INTO w_idPersona FROM USUARIOS WHERE IDUSUARIO = w_idUsuario;
     DELETE FROM USUARIOS WHERE w_IdUsuario = IDUSUARIO;
+    DELETE FROM PERSONAS WHERE w_idPersona = IDPERSONA;
 COMMIT WORK;
 END eliminarUsuario;
 /
-
 SET SERVEROUTPUT ON;
 
 /*    Prueba Requisito funcional nº05 'alta oferta' */
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Prueba nuevo articulo:');
+END;
+/
+EXECUTE insertarArticulo('Es una pruba', 'Probando que funcionan las funciones', 1);
 
-EXECUTE insertarArticulo('Es una prueba', 'Probando que funcionan las funciones', 1);
+SELECT * FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and 
+USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario;
 
-SELECT * FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario;
-
-SELECT count(*) FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario;
+SELECT count(*) FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and 
+USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario;
 
 CALL eliminarArticulo(3);
 
-SELECT count(*) FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario;
+SELECT count(*) FROM ARTICULOS, USUARIOS, TIPOSUSUARIO where ARTICULOS.idUsuarioFK=USUARIOS.idUsuario and 
+USUARIOS.idTipoUsuarioFK=TIPOSUSUARIO.idTipoUsuario;
 
-call insertarUsuario('Pepe', 'contraseña', 3, '30220055B', 'José', 'Villalón', 'Rivero', 'josevillalon95@gmail.com');
+EXECUTE insertarUsuario('Pepe', 'contraseña', 3, '30220057A', 'Pepe', 'Mari', '2', 'pepe@mari.com');
 
 SELECT * FROM USUARIOS;
 
@@ -97,9 +95,6 @@ SELECT count(*) FROM USUARIOS;
 CALL eliminarUsuario(3);
 
 SELECT count(*) FROM USUARIOS;
-
-EXECUTE modificarArticulo(1, 'Modificando nombre', 'Modificando contenido 2');
-EXECUTE modificarArticulo(2, 'Modificando nombre', 'Modificando contenido 3');
-
-select nombreArticulo, contenidoArticulo from articulos;
 /
+
+SELECT IDTIPOUSUARIO FROM TIPOSUSUARIO WHERE NOMBRETIPOUSUARIO = 'Invitado';

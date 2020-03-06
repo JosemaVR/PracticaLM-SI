@@ -7,7 +7,7 @@
 		$nuevoUsuario = $_SESSION["formulario"];
 		$_SESSION["formulario"] = null;
 		$_SESSION["errores"] = null;
-	} else Header("Location: formAltaUsuario.php");	
+	} else Header("Location: formAltaUsuarioNuevo.php");	
 	$conexion = crearConexionBD(); 
 ?>
 <!DOCTYPE html>
@@ -19,13 +19,13 @@
 </head>
 <body>
 	<main id="altaUsuario">
-		<?php if (altaUsuario($conexion, $nuevoUsuario)) { ?>
+		<?php if (altaUsuarioNuevo($conexion, $nuevoUsuario)) { ?>
 			<h1>Ha ocurrido un error.</h1>
 				<div>	
-					Pulsa <a href="formAltaUsuario.php">aquí</a> para volver al formulario.
+					Pulsa <a href="formAltaUsuarioNuevo.php">aquí</a> para volver al formulario.
 				</div>
 		<?php } else {
-			header("Location: consultaArticulos.php");
+			header("Location: login.php");
 		} ?>			
 	</main>
 </body>

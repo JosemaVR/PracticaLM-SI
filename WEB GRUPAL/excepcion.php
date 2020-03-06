@@ -1,16 +1,13 @@
 <?php 
 	session_start();
-	
 	$excepcion = $_SESSION["excepcion"];
 	unset($_SESSION["excepcion"]);
-	
 	if (isset ($_SESSION["destino"])) {
 		$destino = $_SESSION["destino"];
 		unset($_SESSION["destino"]);	
 	} else 
 		$destino = "";
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,8 +18,6 @@
 <body>	
 	
 <?php	
-	include_once("cabecera.php"); 
-
 	if (isset($_SESSION['login'])) {	?>
 	<nav>
 	<ul class="topnav" id="myTopnav">	
@@ -30,7 +25,6 @@
 	</ul>
 	</nav>
 	<?php } ?>
-	
 	<div>
 		<h2>Ups!</h2>
 		<?php if ($destino<>"") { ?>
@@ -38,15 +32,10 @@
 		<?php } else { ?>
 		<p>Ocurrió un problema para acceder a la base de datos. </p>
 		<?php } ?>
-	</div>
-		
+	</div>	
 	<div class='excepcion'>	
 		<?php echo "Información relativa al problema: $excepcion;" ?>
 	</div>
-
-<?php	
-	include_once("pie.php");
-?>	
 
 </body>
 </html>

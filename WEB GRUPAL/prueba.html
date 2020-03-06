@@ -1,0 +1,38 @@
+
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+    <title> 
+        JavaScript  
+      | Set the value of an input field. 
+    </title> 
+</head> 
+  
+<body style="text-align:center;" id="body"> 
+    <h1 style="color:green;">   
+            GeeksForGeeks   
+        </h1> 
+    <input type='text' id='enlaceInput' /> 
+    <br> 
+    <br> 
+    <label onclick="enlace()"> 
+        click to set 
+    </label> 
+    <p id="enlaceFinal" style="color:green;  
+                            font-size: 20px; 
+                            font-weight: bold;"> 
+    </p> 
+    <script> 
+        var x = document.getElementById("enlaceFinal"); 
+        var y = document.getElementById("enlaceInput"); 
+  
+        function enlace() { 
+            y.setAttribute('value', 'defaultValue'); 
+            x.innerHTML =  
+                   "Value = " + "'" + y.value + "'"; 
+        } 
+    </script> 
+</body> 
+  
+</html> 
