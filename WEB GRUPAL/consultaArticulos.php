@@ -18,6 +18,8 @@ if (isset($_SESSION["articulo"])) {
 <head>
   <meta charset="utf-8">
   <title>Inicio</title>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="js/header.js"></script>
   <script type="text/javascript">
   	function funcionVer(idArticulo){
     	var x = document.getElementById(idArticulo);
