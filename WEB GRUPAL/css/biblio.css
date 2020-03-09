@@ -1,0 +1,320 @@
+
+div.error, div.excepcion {
+	color : red;
+	border : red solid 2px;
+	padding : 10px;
+	margin : 10px;
+}
+
+.volverArriba {
+	position:fixed;
+	bottom:0;
+	right:0;
+	border : 5px solid #94D600;
+	display: block;
+	background-color : #13293D;
+	color : #94D600;
+	text-align : center;
+	padding: 14px 16px;
+	text-decoration : none;
+	transition : 0.3s;
+	font-size: 1.5vw;
+
+}
+
+.volverArriba:hover {
+	position:fixed;
+	bottom:0;
+	right:0;
+	background-color : #94D600;
+	color : #272323;
+	text-align : center;
+	padding: 14px 16px;
+	text-decoration : none;
+	transition : 0.3s;
+	font-size: 1.5vw;
+}
+
+main.exito{
+	background-color : #dcdcdceb;
+}
+html {
+	height : 100%;
+	font-family : "Trebuchet MS", Arial, Helvetica, sans-serif;
+	background-image : url("../images/fondoAlternativo.jpg");
+	color : rgba(0, 0, 0, 0.7);
+	background-position : center;
+	background-size : cover;
+	margin : 0;
+}
+
+body {
+	margin-left : 2em;
+	margin-right: 2em;
+}
+
+header {
+	text-align : center;
+	display : block;
+	border-bottom : 5px solid #034E85;
+	width : 100%;
+	color : #034E85;
+}
+
+footer {
+	width : 100%;
+	border-top : 5px solid #034E85;
+	text-align : center;
+	clear : both;
+}
+
+header h1 {
+	font-variant : small-caps;
+}
+
+header h2 {
+	font-weight : lighter;
+	font-style : italic;
+}
+
+header img {
+	display : block;
+	float : left;
+	clear : both;
+}
+
+#enlacesPaginacion {
+	float : left;
+	width : 25%;
+}
+
+.fila_inmueble {
+	float : left;
+	border : #034E85 solid 3px;
+	padding : 10px;
+	background-color : #dcdcdceb;
+	margin-bottom : 10px;
+	width:-webkit-fill-available;
+}
+
+.datos_inmueble {
+	width:80%;
+	float:left;
+}
+
+#botones_fila{
+	width:20%;
+	float:right;
+}
+
+.datos_inmueble div.Info{
+	float:left;
+	width:75%;
+	font-size: 2vw;
+}
+
+.datos_inmueble div.Precio-Metros{
+	float:left;
+	font-size: 1.5vw;
+	width:75%;
+	margin-bottom:10px;
+}
+
+.datos_inmueble iframe#map{
+	float:left;
+	position:absolute;
+	display:block;
+}
+
+.datos_inmueble img{
+	float:left;
+	position:relative;
+	width:50%;
+	height:50%;
+	display:block;
+	margin-right: 10px;
+}
+
+.datos_clientes div.Info{
+	float:left;
+	width:100%;
+	font-size: 1.5vw;
+}
+.datos_clientes div.DatosContacto{
+	float:left;
+	width:100%;
+	font-size: 1.2vw;
+}
+.botones_fila {
+	float : right;
+	width : 25%;
+}
+
+.editar_fila :hover{
+	border : 2px solid red;
+	padding : 2px;
+
+}
+.editar_fila {
+	border : 2px solid black;
+	margin : 3px;
+	float : left;
+}
+
+.editar_fila img{
+    height: 32px;
+    width: 32px;
+
+}
+
+.titulo {
+	font-size : 1.17em;
+	font-variant : small-caps;
+}
+
+.inmueble {
+	clear : both;	
+}
+
+nav {
+	border : #034E85 solid 5px;
+}
+
+main nav {
+	padding : 2px;
+	background-color : #94D600;
+}
+
+#altaInmueble {
+	background-color : 	#dcdcdceb;
+	border : 2px solid blue;
+}
+
+#errorFormulario {
+	opacity: 0.9;
+	background-color : 	#dcdcdceb;
+	border : 2px solid blue;
+}
+
+#altaUsuario {
+	background-color : 	#dcdcdceb;
+	border : 2px solid blue;
+}
+
+.strongpass {
+	background-color : green;
+}
+
+.middlepass {
+	background-color : yellow;
+}
+
+.weakpass {
+	background-color : red;
+}
+
+.nanpass {
+	background-color : lightyellow;
+}
+
+ul.topnav {
+	list-style-type : none;
+	margin : 0;
+	padding : 0;
+	overflow : hidden;
+	display: block;
+	background-color : #13293D;
+}
+
+ul.topnav li {
+	float : left;
+}
+
+ul.topnav li a {
+	display : block;
+	color : #94D600;
+	text-align : center;
+	padding: 14px 16px;
+	text-decoration : none;
+	transition : 0.3s;
+	font-size: 1.5vw;
+}
+
+ul.topnav li a:hover {
+	background-color : #94D600;
+	color : #272323;
+	text-align : center;
+	padding: 14px 16px;
+	text-decoration : none;
+	transition : 0.3s;
+	font-size: 1.5vw;
+}
+
+ul.topnav li ul {
+	display: none;
+}
+
+ul.topnav li a:hover + ul, ul.topnav li ul:hover {
+	display:block;	
+	vertical-align:middle;
+	background-color : #13293D;
+	color : #94D600;
+	width: 195px;
+	position: absolute;
+	list-style: none;
+	padding: 0.35em;
+	text-align : center;
+	text-decoration : none;
+	transition : 0.3s;
+	font-size: 1.5vw;
+	z-index: 1;
+}
+
+ul.topnav li.icon {
+	display : none;
+}
+
+@media screen and (max-width:680px) {
+	ul.topnav li:not(:first-child) {
+		display : none;
+	}
+	
+	ul.topnav li.icon {
+		float : right;
+		display : inline-block;
+	}
+
+	.autor {
+		display : none;
+	}
+}
+
+@media screen and (max-width:680px) {
+	ul.topnav.responsive {
+		position : relative;
+	}
+
+	ul.topnav.responsive li.icon {
+		position : absolute;
+		right : 0;
+		top : 0;
+	}
+
+	ul.topnav.responsive li {
+		float : none;
+		display : inline;
+		position : relative;
+		text-align : left;		
+	}
+}
+
+form.about{
+	text-align:center;
+	background-color : 	#dcdcdceb;
+	border : 2px solid blue;
+	padding-left: 10px;
+}
+
+form.about ul{
+	text-align:left;
+}
